@@ -13,16 +13,14 @@ public class EnrollmentRecord {
 
     private Student student;
     private Course course;
-    private double grade;   // you can later use this to calculate GPA
+    private double grade;   
 
-    // ---------- Constructor ----------
     public EnrollmentRecord(Student student, Course course, double grade) {
         this.student = student;
         this.course = course;
         this.grade = grade;
     }
-
-    // ---------- Getters & Setters ----------
+    
     public Student getStudent() {
         return student;
     }
@@ -47,7 +45,6 @@ public class EnrollmentRecord {
         this.grade = grade;
     }
 
-    // ---------- Helper method ----------
     @Override
     public String toString() {
         return student.getName() + " enrolled in " + course.getTitle() + " (" + grade + ")";

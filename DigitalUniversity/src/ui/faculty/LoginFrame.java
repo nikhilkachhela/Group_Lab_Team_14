@@ -41,17 +41,21 @@ public class LoginFrame extends javax.swing.JFrame {
         txtPassword = new javax.swing.JTextField();
         btnLogin = new javax.swing.JButton();
         lblStatus = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login");
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(0, 153, 153));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        lblUser.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblUser.setText("Username:");
         getContentPane().add(lblUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 90, 70, 20));
-        getContentPane().add(txtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 90, 180, -1));
+        getContentPane().add(txtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 90, 110, -1));
 
+        lblPassword.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblPassword.setText("Password:");
         getContentPane().add(lblPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 150, -1, -1));
 
@@ -60,7 +64,7 @@ public class LoginFrame extends javax.swing.JFrame {
                 txtPasswordActionPerformed(evt);
             }
         });
-        getContentPane().add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 140, 180, -1));
+        getContentPane().add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 140, 110, -1));
 
         btnLogin.setText("Login");
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
@@ -73,6 +77,15 @@ public class LoginFrame extends javax.swing.JFrame {
         lblStatus.setForeground(new java.awt.Color(255, 0, 0));
         getContentPane().add(lblStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 280, 70, 20));
 
+        jPanel1.setBackground(new java.awt.Color(0, 153, 153));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setText("Login Page");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 30, 140, -1));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 550, 380));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -84,35 +97,27 @@ public class LoginFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         String userInput = txtUsername.getText().trim();
         String passInput = txtPassword.getText().trim();
-        
-        
 
-    // Get the only faculty we have for now
-    model.Faculty f = MockDataStore.FACULTY_1;
+    model.Faculty f = model.MockDataStore.FACULTY_1;
 
     if (f == null) {
         lblStatus.setText("System error: no faculty loaded.");
         return;
     }
 
-    // Check credentials
     if (userInput.equals(f.getUsername()) && passInput.equals(f.getPassword())) {
-        // login success
-        lblStatus.setText("");
-
-        // open the dashboard for this faculty
-        FacultyDashBoard dashboard = new FacultyDashBoard(f);
-        dashboard.setLocationRelativeTo(null); // center it
+        lblStatus.setText("Login successful!");
+        
+        ui.faculty.FacultyDashBoard dashboard = new ui.faculty.FacultyDashBoard(f);
+        dashboard.setLocationRelativeTo(null);
         dashboard.setVisible(true);
 
-        // close the login window
         this.dispose();
+
     } else {
-        // login failed
         lblStatus.setText("Invalid username or password.");
-        // (Optional) JOptionPane popup too:
-        // JOptionPane.showMessageDialog(this, "Login failed", "Error", JOptionPane.ERROR_MESSAGE);
     }
+
 
     }//GEN-LAST:event_btnLoginActionPerformed
 
@@ -153,6 +158,8 @@ public class LoginFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblPassword;
     private javax.swing.JLabel lblStatus;
     private javax.swing.JLabel lblUser;

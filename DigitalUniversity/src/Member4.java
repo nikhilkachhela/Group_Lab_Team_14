@@ -7,25 +7,19 @@
  *
  * @author samee
  */
-import model.MockDataStore;
-import ui.faculty.FacultyDashBoard;
+import ui.faculty.LoginFrame;
 
 public class Member4 {
 
     public static void main(String[] args) {
 
-        // 1. Load the mock/sample data into memory
-        MockDataStore.init();
-
-        // 2. Open the Faculty dashboard for FACULTY_1
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                FacultyDashBoard frame = new FacultyDashBoard(MockDataStore.FACULTY_1);
-                frame.setVisible(true);
+                LoginFrame login = new LoginFrame();
+                login.setLocationRelativeTo(null);
+                login.setVisible(true);
             }
         });
     }
 }
-
-

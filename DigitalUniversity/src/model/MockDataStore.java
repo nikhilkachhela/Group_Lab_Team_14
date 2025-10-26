@@ -24,11 +24,9 @@ public class MockDataStore {
     public static ArrayList<Student> students = new ArrayList<>();
     public static ArrayList<EnrollmentRecord> enrollments = new ArrayList<>();
 
-    // ---------------------------
-    // INIT: called from Member4
-    // ---------------------------
+    
     public static void init() {
-        // 1. Faculty: load from file or create default
+        
         FACULTY_1 = loadFacultyFromFile();
         if (FACULTY_1 == null) {
             FACULTY_1 = new Faculty(
@@ -41,14 +39,12 @@ public class MockDataStore {
                 "password123"
             );
         }
-
-        // 2. Students (static demo data)
+        
         students = new ArrayList<>();
         students.add(new Student("S001", "Alice Johnson", "alice@uni.edu"));
         students.add(new Student("S002", "Bob Patel", "bob@uni.edu"));
         students.add(new Student("S003", "Carlos Gomez", "carlos@uni.edu"));
-
-        // 3. Courses: load from file or create default
+        
         courses = loadCoursesFromFile();
         if (courses == null || courses.isEmpty()) {
             courses = new ArrayList<>();
@@ -57,10 +53,9 @@ public class MockDataStore {
             courses.add(c1);
             courses.add(c2);
         }
-
-        // 4. Enrollments: link students to courses
+        
         enrollments = new ArrayList<>();
-        // assume courses.get(0) = INFO5100, courses.get(1) = INFO6150, etc.
+        
         Course c1ref = findCourseById("INFO5100");
         Course c2ref = findCourseById("INFO6150");
 
@@ -76,7 +71,6 @@ public class MockDataStore {
         }
     }
 
-    // helper: find course by ID
     public static Course findCourseById(String id) {
         for (Course c : courses) {
             if (c.getCourseId().equals(id)) {
@@ -85,10 +79,6 @@ public class MockDataStore {
         }
         return null;
     }
-
-    // ============================================================
-    // FACULTY SAVE / LOAD (profile persistence)
-    // ============================================================
 
     public static void saveFacultyToFile(Faculty f) {
         if (f == null) return;
@@ -152,19 +142,12 @@ public class MockDataStore {
         }
     }
 
-    // ============================================================
-    // COURSES SAVE / LOAD (course persistence)
-    // ============================================================
-
-    // Save all courses to disk
-    // Each line = courseId|title|schedule|capacity
-    // Only saves courses taught by FACULTY_1 (your current faculty)
     public static void saveCoursesToFile() {
         try {
             FileWriter fw = new FileWriter("courses_data.txt");
 
             for (Course c : courses) {
-                // we only support one faculty login right now anyway
+                
                 if (c.getInstructor() == FACULTY_1) {
                     fw.write(
                         esc(c.getCourseId()) + "|" +
@@ -182,9 +165,7 @@ public class MockDataStore {
             ex.printStackTrace();
         }
     }
-
-    // Load courses from disk
-    // Recreates Course objects and assigns instructor = FACULTY_1
+    
     private static ArrayList<Course> loadCoursesFromFile() {
         File file = new File("courses_data.txt");
         if (!file.exists()) {
@@ -225,11 +206,7 @@ public class MockDataStore {
 
         return result;
     }
-
-    // ============================================================
-    // helpers for escaping pipes
-    // ============================================================
-
+    
     private static String esc(String s) {
         if (s == null) return "";
         return s.replace("|", "\\|");

@@ -15,8 +15,8 @@ public class Faculty {
     private String department;
     private String officeHours;
 
-    private String username; // for login
-    private String password; // for login
+    private String username; 
+    private String password; 
 
     public Faculty(String facultyId,
                    String name,

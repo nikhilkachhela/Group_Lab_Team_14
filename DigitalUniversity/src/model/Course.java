@@ -13,8 +13,6 @@ package model;
 
  
 public class Course {
-
-    // ---------- Fields ----------
     private String courseId;
     private String title;
     private String description;
@@ -24,7 +22,6 @@ public class Course {
     private String syllabusText;
     private Faculty instructor;
 
-    // ---------- Full 8-parameter constructor ----------
     public Course(String courseId,
                   String title,
                   String description,
@@ -42,15 +39,7 @@ public class Course {
         this.syllabusText = syllabusText;
         this.instructor = instructor;
     }
-
-    // ---------- Short 5-parameter constructor ----------
-    // Matches how MockDataStore is calling it:
-    // new Course("INFO5100", "Application Engineering", "Mon/Wed 2–4 PM", 30, FACULTY_1);
-    //
-    // Arguments here are:
-    // courseId, title, schedule, capacity, instructor
-    //
-    // We'll fill description="", enrollmentOpen=true, syllabusText=""
+    
     public Course(String courseId,
                   String title,
                   String schedule,
@@ -66,7 +55,6 @@ public class Course {
              instructor);
     }
 
-    // ---------- Getters & Setters ----------
     public String getCourseId() { return courseId; }
     public void setCourseId(String courseId) { this.courseId = courseId; }
 
@@ -90,8 +78,7 @@ public class Course {
 
     public Faculty getInstructor() { return instructor; }
     public void setInstructor(Faculty instructor) { this.instructor = instructor; }
-
-    // ---------- For displaying in dropdowns or tables ----------
+    
     @Override
     public String toString() {
         return courseId + " - " + title;

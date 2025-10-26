@@ -111,7 +111,7 @@ private void setupCourseTableClick() {
     });
 }
 
-// ---------------- STUDENTS TAB: fill the dropdown and load table ----------------
+
 private void loadStudentsTab() {
     // Clear any items currently in the dropdown
     cmbCourseSelect.removeAllItems();
@@ -125,24 +125,20 @@ for (model.Course c : model.MockDataStore.courses) {
     
 }
 
-
-    // Add each course taught by this faculty
     for (model.Course c : model.MockDataStore.courses) {
         if (c.getInstructor() != null &&
             currentFaculty != null &&
             c.getInstructor().getFacultyId().equals(currentFaculty.getFacultyId())) {
 
-            // We are adding String labels now (not Course objects)
             cmbCourseSelect.addItem(c.getCourseId() + " - " + c.getTitle());
         }
     }
 
-    // After populating, select the first one and load data
     if (cmbCourseSelect.getItemCount() > 0) {
         cmbCourseSelect.setSelectedIndex(0);
         updateStudentTableAndStats();
     } else {
-        // If no courses matched, clear table + GPA
+      
         javax.swing.table.DefaultTableModel emptyModel =
             new javax.swing.table.DefaultTableModel(
                 new Object[][]{},
@@ -153,18 +149,14 @@ for (model.Course c : model.MockDataStore.courses) {
                     return false;
                 }
             };
+        
         tblStudents.setModel(emptyModel);
         lblClassGpa.setText("0.00");
     }
 }
 
 private void loadReportsTab() {
-    // We will:
-    // - count how many courses this faculty teaches
-    // - count total students across these courses (unique student count)
-    // - compute average GPA across these courses (4.0 scale)
-    // - find which course has the most enrollments
-
+    
     if (currentFaculty == null) {
         lblTotalCourses.setText("0");
         lblTotalStudents.setText("0");
@@ -173,7 +165,6 @@ private void loadReportsTab() {
         return;
     }
 
-    // 1. Gather courses that belong to this faculty
     java.util.ArrayList<model.Course> myCourses = new java.util.ArrayList<>();
     for (model.Course c : model.MockDataStore.courses) {
         if (c.getInstructor() != null &&
@@ -183,25 +174,17 @@ private void loadReportsTab() {
     }
 
     lblTotalCourses.setText("" + myCourses.size());
-
-    // 2. Count enrolled students across those courses
-    // We'll use a Set so the same student in 2 courses isn't double-counted
+    
     java.util.HashSet<String> uniqueStudentIds = new java.util.HashSet<>();
-
-    // We'll also build per-course enrollment counts and per-course GPA
     int mostEnrollCount = 0;
     String mostEnrollCourseLabel = "N/A";
 
-    // for GPA across all courses:
     double totalAllCoursesGpa = 0.0;
     int gpaCourseCount = 0;
 
     for (model.Course course : myCourses) {
 
-        // count how many enrollments in this course
         int thisCourseEnroll = 0;
-
-        // compute class GPA for this single course
         double courseGpa = computeCourseGpa(course); // average GPA 0-4 for that one course
         if (courseGpa >= 0.0) {
             totalAllCoursesGpa += courseGpa;
@@ -220,8 +203,7 @@ private void loadReportsTab() {
                 }
             }
         }
-
-        // track most enrolled course
+        
         if (thisCourseEnroll > mostEnrollCount) {
             mostEnrollCount = thisCourseEnroll;
             mostEnrollCourseLabel = course.getCourseId() + " - " + course.getTitle()
@@ -231,7 +213,6 @@ private void loadReportsTab() {
 
     lblTotalStudents.setText("" + uniqueStudentIds.size());
 
-    // overall GPA across all courses
     if (gpaCourseCount > 0) {
         double avgOverall = totalAllCoursesGpa / gpaCourseCount;
         lblOverallGpa.setText(String.format("%.2f", avgOverall));
@@ -239,13 +220,11 @@ private void loadReportsTab() {
         lblOverallGpa.setText("0.00");
     }
 
-    // most enrolled course label
     lblTopCourse.setText(mostEnrollCourseLabel);
 }
 
-// ---------------- STUDENTS TAB: update table + GPA ----------------
 private void updateStudentTableAndStats() {
-    // 1. Figure out which course is selected in the combo box
+   
     String selectedName = (String) cmbCourseSelect.getSelectedItem();
     if (selectedName == null) {
         return;
@@ -253,7 +232,7 @@ private void updateStudentTableAndStats() {
 
     model.Course selectedCourse = null;
     for (model.Course c : model.MockDataStore.courses) {
-        String label = c.getCourseId() + " - " + c.getTitle(); // same string we added to dropdown
+        String label = c.getCourseId() + " - " + c.getTitle(); 
         if (label.equals(selectedName)) {
             selectedCourse = c;
             break;
@@ -264,7 +243,6 @@ private void updateStudentTableAndStats() {
         return;
     }
 
-    // 2. Build the table model for students in that course
     javax.swing.table.DefaultTableModel studentModel =
         new javax.swing.table.DefaultTableModel(
             new Object[][]{},
@@ -275,8 +253,7 @@ private void updateStudentTableAndStats() {
                 return false;
             }
         };
-
-    // We'll compute GPA using GPA points (0.0 - 4.0), not raw percent
+    
     double totalGpaPoints = 0.0;
     int count = 0;
 
@@ -289,7 +266,6 @@ private void updateStudentTableAndStats() {
             String letter = letterFromGrade(grade); // ex: "B"
             double gpaPoints = gpaFromLetter(letter); // ex: 3.0
 
-            // Add row in table
             studentModel.addRow(new Object[]{
                 s.getStudentId(),
                 s.getName(),
@@ -301,11 +277,9 @@ private void updateStudentTableAndStats() {
             count++;
         }
     }
-
-    // Show rows in UI
+    
     tblStudents.setModel(studentModel);
 
-    // 3. Update GPA label at bottom
     if (count > 0) {
         double avgGpa = totalGpaPoints / count;      // ex: 3.25 out of 4.0
         lblClassGpa.setText(String.format("%.2f", avgGpa));
@@ -314,7 +288,7 @@ private void updateStudentTableAndStats() {
     }
 }
 
-// ---------------- helper: numeric grade to letter ----------------
+
 private String letterFromGrade(double grade) {
     if (grade >= 90) return "A";
     if (grade >= 80) return "B";
@@ -356,10 +330,10 @@ private double computeCourseGpa(model.Course course) {
     }
 
     if (count == 0) {
-        return -1.0; // no students, no GPA
+        return -1.0; 
     }
 
-    return totalPoints / count; // avg GPA for that course
+    return totalPoints / count; 
 }
 
 
@@ -665,9 +639,9 @@ private double computeCourseGpa(model.Course course) {
                     .addComponent(jLabel3)
                     .addComponent(lblTotalStudents))
                 .addGap(18, 18, 18)
-                .addGroup(pnlReportsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(lblOverallGpa))
+                .addGroup(pnlReportsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblOverallGpa)
+                    .addComponent(jLabel4))
                 .addGap(18, 18, 18)
                 .addGroup(pnlReportsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
@@ -693,15 +667,14 @@ private double computeCourseGpa(model.Course course) {
     String newSchedule = txtSchedule.getText().trim();
     String newCapacityText = txtCapacity.getText().trim();
 
-    // Try to parse capacity into an int
+   
     Integer newCapacity = null;
     try {
         newCapacity = Integer.parseInt(newCapacityText);
     } catch (NumberFormatException ex) {
         System.out.println("Capacity is not a number. Leaving previous capacity.");
     }
-
-    // 2. Find the matching Course in MockDataStore
+    
     model.Course courseToUpdate = null;
     for (model.Course c : model.MockDataStore.courses) {
         if (c.getInstructor() == currentFaculty &&
@@ -715,25 +688,21 @@ private double computeCourseGpa(model.Course course) {
         System.out.println("No matching course found to update.");
         return;
     }
-
-    // 3. Update in-memory course
+    
     courseToUpdate.setTitle(newTitle);
     courseToUpdate.setSchedule(newSchedule);
     if (newCapacity != null) {
         courseToUpdate.setCapacity(newCapacity);
     }
 
-    // 4. Write ALL courses to disk so it persists next run
     model.MockDataStore.saveCoursesToFile();
 
-    // 5. Debug print for grading/demo
     System.out.println("Course updated and saved:");
     System.out.println("  ID:       " + courseToUpdate.getCourseId());
     System.out.println("  Title:    " + courseToUpdate.getTitle());
     System.out.println("  Schedule: " + courseToUpdate.getSchedule());
     System.out.println("  Capacity: " + courseToUpdate.getCapacity());
 
-    // 6. Reload table from the updated in-memory list
     loadCoursesTab();
 
 
