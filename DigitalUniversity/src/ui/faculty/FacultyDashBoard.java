@@ -18,11 +18,14 @@ public class FacultyDashBoard extends javax.swing.JFrame {
     public FacultyDashBoard(model.Faculty faculty) {
     initComponents();
     this.currentFaculty = faculty;
-
+    
+     cmbCourseSelect.setModel(new javax.swing.DefaultComboBoxModel());
+     
     loadProfileTab();
     loadCoursesTab();       
     setupCourseTableClick(); 
-  
+    loadStudentsTab();
+
 }
 
 private void loadProfileTab() {
@@ -107,6 +110,139 @@ private void setupCourseTableClick() {
     });
 }
 
+// ---------------- STUDENTS TAB: fill the dropdown and load table ----------------
+private void loadStudentsTab() {
+    // Clear any items currently in the dropdown
+    cmbCourseSelect.removeAllItems();
+    
+    System.out.println("DEBUG loadStudentsTab: currentFaculty = " +
+    (currentFaculty == null ? "null" : currentFaculty.getFacultyId()));
+
+for (model.Course c : model.MockDataStore.courses) {
+    System.out.println("DEBUG course " + c.getCourseId() +
+        " taught by " + (c.getInstructor() == null ? "null" : c.getInstructor().getFacultyId()));
+    
+}
+
+
+    // Add each course taught by this faculty
+    for (model.Course c : model.MockDataStore.courses) {
+        if (c.getInstructor() != null &&
+            currentFaculty != null &&
+            c.getInstructor().getFacultyId().equals(currentFaculty.getFacultyId())) {
+
+            // We are adding String labels now (not Course objects)
+            cmbCourseSelect.addItem(c.getCourseId() + " - " + c.getTitle());
+        }
+    }
+
+    // After populating, select the first one and load data
+    if (cmbCourseSelect.getItemCount() > 0) {
+        cmbCourseSelect.setSelectedIndex(0);
+        updateStudentTableAndStats();
+    } else {
+        // If no courses matched, clear table + GPA
+        javax.swing.table.DefaultTableModel emptyModel =
+            new javax.swing.table.DefaultTableModel(
+                new Object[][]{},
+                new String[] { "Student ID", "Student Name", "Grade %", "Letter" }
+            ) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+        tblStudents.setModel(emptyModel);
+        lblClassGpa.setText("0.00");
+    }
+}
+
+
+// ---------------- STUDENTS TAB: update table + GPA ----------------
+private void updateStudentTableAndStats() {
+    // 1. Figure out which course is selected in the combo box
+    String selectedName = (String) cmbCourseSelect.getSelectedItem();
+    if (selectedName == null) {
+        return;
+    }
+
+    model.Course selectedCourse = null;
+    for (model.Course c : model.MockDataStore.courses) {
+        String label = c.getCourseId() + " - " + c.getTitle(); // same string we added to dropdown
+        if (label.equals(selectedName)) {
+            selectedCourse = c;
+            break;
+        }
+    }
+
+    if (selectedCourse == null) {
+        return;
+    }
+
+    // 2. Build the table model for students in that course
+    javax.swing.table.DefaultTableModel studentModel =
+        new javax.swing.table.DefaultTableModel(
+            new Object[][]{},
+            new String[] { "Student ID", "Student Name", "Grade %", "Letter" }
+        ) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+    // We'll compute GPA using GPA points (0.0 - 4.0), not raw percent
+    double totalGpaPoints = 0.0;
+    int count = 0;
+
+    for (model.EnrollmentRecord rec : model.MockDataStore.enrollments) {
+        if (rec.getCourse() != null &&
+            rec.getCourse().getCourseId().equals(selectedCourse.getCourseId())) {
+
+            model.Student s = rec.getStudent();
+            double grade = rec.getGrade();          // ex: 86.5
+            String letter = letterFromGrade(grade); // ex: "B"
+            double gpaPoints = gpaFromLetter(letter); // ex: 3.0
+
+            // Add row in table
+            studentModel.addRow(new Object[]{
+                s.getStudentId(),
+                s.getName(),
+                grade,
+                letter
+            });
+
+            totalGpaPoints += gpaPoints;
+            count++;
+        }
+    }
+
+    // Show rows in UI
+    tblStudents.setModel(studentModel);
+
+    // 3. Update GPA label at bottom
+    if (count > 0) {
+        double avgGpa = totalGpaPoints / count;      // ex: 3.25 out of 4.0
+        lblClassGpa.setText(String.format("%.2f", avgGpa));
+    } else {
+        lblClassGpa.setText("0.00");
+    }
+}
+
+// ---------------- helper: numeric grade to letter ----------------
+private String letterFromGrade(double grade) {
+    if (grade >= 90) return "A";
+    if (grade >= 80) return "B";
+    if (grade >= 70) return "C";
+    if (grade >= 60) return "D";
+    return "F";
+    
+  
+}
+
+
+  
+
 
 
     /**
@@ -141,6 +277,13 @@ private void setupCourseTableClick() {
         lblCapacity = new javax.swing.JLabel();
         txtCapacity = new javax.swing.JTextField();
         btnSaveCourseChanges = new javax.swing.JButton();
+        pnlStudents = new javax.swing.JPanel();
+        lblSelectCourse = new javax.swing.JLabel();
+        cmbCourseSelect = new javax.swing.JComboBox<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblStudents = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        lblClassGpa = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Faculty Dashboard");
@@ -261,6 +404,42 @@ private void setupCourseTableClick() {
 
         tabMain.addTab("Courses", pnlCourses);
 
+        pnlStudents.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblSelectCourse.setText("Select Course");
+        pnlStudents.add(lblSelectCourse, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
+
+        cmbCourseSelect.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbCourseSelect.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbCourseSelectActionPerformed(evt);
+            }
+        });
+        pnlStudents.add(cmbCourseSelect, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, -1, -1));
+
+        tblStudents.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(tblStudents);
+
+        pnlStudents.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 420, 220));
+
+        jLabel2.setText("Class GPA:");
+        pnlStudents.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, -1, -1));
+
+        lblClassGpa.setText("0.00");
+        pnlStudents.add(lblClassGpa, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 300, -1, -1));
+
+        tabMain.addTab("Students/Grades", pnlStudents);
+
         getContentPane().add(tabMain, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 570, 400));
 
         pack();
@@ -340,6 +519,11 @@ private void setupCourseTableClick() {
     }
     }//GEN-LAST:event_btnSaveActionPerformed
 
+    private void cmbCourseSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCourseSelectActionPerformed
+        // TODO add your handling code here:
+        updateStudentTableAndStats();
+    }//GEN-LAST:event_cmbCourseSelectActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -348,19 +532,26 @@ private void setupCourseTableClick() {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnSaveCourseChanges;
+    private javax.swing.JComboBox<String> cmbCourseSelect;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblCapacity;
+    private javax.swing.JLabel lblClassGpa;
     private javax.swing.JLabel lblCourseId;
     private javax.swing.JLabel lblDepartment;
     private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblName;
     private javax.swing.JLabel lblOfficeHours;
     private javax.swing.JLabel lblSchedule;
+    private javax.swing.JLabel lblSelectCourse;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JPanel pnlCourses;
     private javax.swing.JPanel pnlProfile;
+    private javax.swing.JPanel pnlStudents;
     private javax.swing.JTabbedPane tabMain;
     private javax.swing.JTable tblCourses;
+    private javax.swing.JTable tblStudents;
     private javax.swing.JTextField txtCapacity;
     private javax.swing.JTextField txtCourseId;
     private javax.swing.JTextField txtDepartment;
