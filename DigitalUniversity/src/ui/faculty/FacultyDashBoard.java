@@ -428,12 +428,21 @@ private double computeCourseGpa(model.Course course) {
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        tabMain.setBackground(new java.awt.Color(0, 204, 204));
+        tabMain.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+
+        pnlProfile.setBackground(new java.awt.Color(0, 153, 153));
+
+        lblName.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblName.setText("Name");
 
+        lblEmail.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblEmail.setText("Email");
 
+        lblDepartment.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblDepartment.setText("Department");
 
+        lblOfficeHours.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblOfficeHours.setText("Office Hours");
 
         txtEmail.addActionListener(new java.awt.event.ActionListener() {
@@ -461,7 +470,7 @@ private double computeCourseGpa(model.Course course) {
                             .addComponent(lblName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblDepartment, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblOfficeHours, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE))
+                            .addComponent(lblOfficeHours, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(61, 61, 61)
                         .addGroup(pnlProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtName)
@@ -471,7 +480,7 @@ private double computeCourseGpa(model.Course course) {
                     .addGroup(pnlProfileLayout.createSequentialGroup()
                         .addGap(127, 127, 127)
                         .addComponent(btnSave)))
-                .addContainerGap(179, Short.MAX_VALUE))
+                .addContainerGap(184, Short.MAX_VALUE))
         );
         pnlProfileLayout.setVerticalGroup(
             pnlProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -499,6 +508,7 @@ private double computeCourseGpa(model.Course course) {
 
         tabMain.addTab("Profile", pnlProfile);
 
+        pnlCourses.setBackground(new java.awt.Color(0, 153, 153));
         pnlCourses.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tblCourses.setModel(new javax.swing.table.DefaultTableModel(
@@ -516,22 +526,27 @@ private double computeCourseGpa(model.Course course) {
 
         pnlCourses.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 460, 200));
 
+        lblCourseId.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblCourseId.setText("Course ID");
         pnlCourses.add(lblCourseId, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, -1, -1));
         pnlCourses.add(txtCourseId, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 240, -1, -1));
 
+        lblTitle.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblTitle.setText("Title");
         pnlCourses.add(lblTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 240, -1, -1));
         pnlCourses.add(txtTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 240, 150, -1));
 
+        lblSchedule.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblSchedule.setText("Schedule");
         pnlCourses.add(lblSchedule, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 280, -1, -1));
         pnlCourses.add(txtSchedule, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 280, 150, -1));
 
+        lblCapacity.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblCapacity.setText("Capacity");
         pnlCourses.add(lblCapacity, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, -1, -1));
         pnlCourses.add(txtCapacity, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 280, -1, -1));
 
+        btnSaveCourseChanges.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnSaveCourseChanges.setText("Save Course Changes");
         btnSaveCourseChanges.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -542,8 +557,10 @@ private double computeCourseGpa(model.Course course) {
 
         tabMain.addTab("Courses", pnlCourses);
 
+        pnlStudents.setBackground(new java.awt.Color(0, 153, 153));
         pnlStudents.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        lblSelectCourse.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblSelectCourse.setText("Select Course");
         pnlStudents.add(lblSelectCourse, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
 
@@ -570,6 +587,7 @@ private double computeCourseGpa(model.Course course) {
 
         pnlStudents.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 420, 220));
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setText("Class GPA:");
         pnlStudents.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, -1, -1));
 
@@ -578,20 +596,27 @@ private double computeCourseGpa(model.Course course) {
 
         tabMain.addTab("Students/Grades", pnlStudents);
 
+        pnlReports.setBackground(new java.awt.Color(0, 153, 153));
+
+        lblReportHeader.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblReportHeader.setText("Faculty Summary");
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setText("Total Courses:");
 
         lblTotalCourses.setText("0");
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel3.setText("Total Enrolled Students:");
 
         lblTotalStudents.setText("0");
 
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel4.setText("Overall Class GPA:");
 
         lblOverallGpa.setText("0.00");
 
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel6.setText("Most Enrolled Course:");
 
         lblTopCourse.setText("N/A");
@@ -601,13 +626,9 @@ private double computeCourseGpa(model.Course course) {
         pnlReportsLayout.setHorizontalGroup(
             pnlReportsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlReportsLayout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(184, Short.MAX_VALUE)
                 .addGroup(pnlReportsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlReportsLayout.createSequentialGroup()
-                        .addComponent(lblReportHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlReportsLayout.createSequentialGroup()
-                        .addGap(0, 178, Short.MAX_VALUE)
                         .addGroup(pnlReportsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlReportsLayout.createSequentialGroup()
                                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -619,20 +640,23 @@ private double computeCourseGpa(model.Course course) {
                                 .addGap(42, 42, 42))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlReportsLayout.createSequentialGroup()
                                 .addComponent(jLabel1)
-                                .addGap(60, 60, 60)))))
-                .addGroup(pnlReportsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblTotalCourses, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblTotalStudents, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblOverallGpa, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblTopCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24))
+                                .addGap(60, 60, 60)))
+                        .addGroup(pnlReportsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblTotalCourses, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblTotalStudents, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblOverallGpa, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblTopCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(24, 24, 24))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlReportsLayout.createSequentialGroup()
+                        .addComponent(lblReportHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(124, 124, 124))))
         );
         pnlReportsLayout.setVerticalGroup(
             pnlReportsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlReportsLayout.createSequentialGroup()
-                .addGap(27, 27, 27)
+                .addGap(38, 38, 38)
                 .addComponent(lblReportHeader)
-                .addGap(29, 29, 29)
+                .addGap(18, 18, 18)
                 .addGroup(pnlReportsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(lblTotalCourses))
@@ -648,7 +672,7 @@ private double computeCourseGpa(model.Course course) {
                 .addGroup(pnlReportsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(lblTopCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(169, Short.MAX_VALUE))
+                .addContainerGap(160, Short.MAX_VALUE))
         );
 
         tabMain.addTab("Reports", pnlReports);
