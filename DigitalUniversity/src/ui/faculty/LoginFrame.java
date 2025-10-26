@@ -23,6 +23,7 @@ public class LoginFrame extends javax.swing.JFrame {
         initComponents();
         MockDataStore.init();
         lblStatus.setText("");
+        
     }
 
     /**
@@ -62,6 +63,11 @@ public class LoginFrame extends javax.swing.JFrame {
         getContentPane().add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 140, 180, -1));
 
         btnLogin.setText("Login");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 230, -1, -1));
 
         lblStatus.setForeground(new java.awt.Color(255, 0, 0));
@@ -73,6 +79,42 @@ public class LoginFrame extends javax.swing.JFrame {
     private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPasswordActionPerformed
+
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        // TODO add your handling code here:
+        String userInput = txtUsername.getText().trim();
+        String passInput = txtPassword.getText().trim();
+        
+        
+
+    // Get the only faculty we have for now
+    model.Faculty f = MockDataStore.FACULTY_1;
+
+    if (f == null) {
+        lblStatus.setText("System error: no faculty loaded.");
+        return;
+    }
+
+    // Check credentials
+    if (userInput.equals(f.getUsername()) && passInput.equals(f.getPassword())) {
+        // login success
+        lblStatus.setText("");
+
+        // open the dashboard for this faculty
+        FacultyDashBoard dashboard = new FacultyDashBoard(f);
+        dashboard.setLocationRelativeTo(null); // center it
+        dashboard.setVisible(true);
+
+        // close the login window
+        this.dispose();
+    } else {
+        // login failed
+        lblStatus.setText("Invalid username or password.");
+        // (Optional) JOptionPane popup too:
+        // JOptionPane.showMessageDialog(this, "Login failed", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    }//GEN-LAST:event_btnLoginActionPerformed
 
     /**
      * @param args the command line arguments
