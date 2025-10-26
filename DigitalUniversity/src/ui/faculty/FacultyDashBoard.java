@@ -25,6 +25,7 @@ public class FacultyDashBoard extends javax.swing.JFrame {
     loadCoursesTab();       
     setupCourseTableClick(); 
     loadStudentsTab();
+    loadReportsTab();
 
 }
 
@@ -157,6 +158,90 @@ for (model.Course c : model.MockDataStore.courses) {
     }
 }
 
+private void loadReportsTab() {
+    // We will:
+    // - count how many courses this faculty teaches
+    // - count total students across these courses (unique student count)
+    // - compute average GPA across these courses (4.0 scale)
+    // - find which course has the most enrollments
+
+    if (currentFaculty == null) {
+        lblTotalCourses.setText("0");
+        lblTotalStudents.setText("0");
+        lblOverallGpa.setText("0.00");
+        lblTopCourse.setText("N/A");
+        return;
+    }
+
+    // 1. Gather courses that belong to this faculty
+    java.util.ArrayList<model.Course> myCourses = new java.util.ArrayList<>();
+    for (model.Course c : model.MockDataStore.courses) {
+        if (c.getInstructor() != null &&
+            c.getInstructor().getFacultyId().equals(currentFaculty.getFacultyId())) {
+            myCourses.add(c);
+        }
+    }
+
+    lblTotalCourses.setText("" + myCourses.size());
+
+    // 2. Count enrolled students across those courses
+    // We'll use a Set so the same student in 2 courses isn't double-counted
+    java.util.HashSet<String> uniqueStudentIds = new java.util.HashSet<>();
+
+    // We'll also build per-course enrollment counts and per-course GPA
+    int mostEnrollCount = 0;
+    String mostEnrollCourseLabel = "N/A";
+
+    // for GPA across all courses:
+    double totalAllCoursesGpa = 0.0;
+    int gpaCourseCount = 0;
+
+    for (model.Course course : myCourses) {
+
+        // count how many enrollments in this course
+        int thisCourseEnroll = 0;
+
+        // compute class GPA for this single course
+        double courseGpa = computeCourseGpa(course); // average GPA 0-4 for that one course
+        if (courseGpa >= 0.0) {
+            totalAllCoursesGpa += courseGpa;
+            gpaCourseCount++;
+        }
+
+        for (model.EnrollmentRecord rec : model.MockDataStore.enrollments) {
+            if (rec.getCourse() != null &&
+                rec.getCourse().getCourseId().equals(course.getCourseId())) {
+
+                thisCourseEnroll++;
+
+                model.Student s = rec.getStudent();
+                if (s != null) {
+                    uniqueStudentIds.add(s.getStudentId());
+                }
+            }
+        }
+
+        // track most enrolled course
+        if (thisCourseEnroll > mostEnrollCount) {
+            mostEnrollCount = thisCourseEnroll;
+            mostEnrollCourseLabel = course.getCourseId() + " - " + course.getTitle()
+                    + " (" + thisCourseEnroll + " students)";
+        }
+    }
+
+    lblTotalStudents.setText("" + uniqueStudentIds.size());
+
+    // overall GPA across all courses
+    if (gpaCourseCount > 0) {
+        double avgOverall = totalAllCoursesGpa / gpaCourseCount;
+        lblOverallGpa.setText(String.format("%.2f", avgOverall));
+    } else {
+        lblOverallGpa.setText("0.00");
+    }
+
+    // most enrolled course label
+    lblTopCourse.setText(mostEnrollCourseLabel);
+}
 
 // ---------------- STUDENTS TAB: update table + GPA ----------------
 private void updateStudentTableAndStats() {
@@ -236,9 +321,49 @@ private String letterFromGrade(double grade) {
     if (grade >= 70) return "C";
     if (grade >= 60) return "D";
     return "F";
-    
-  
+   
 }
+private double gpaFromLetter(String letter) {
+    switch (letter) {
+        case "A":  return 4.0;
+        case "A-": return 3.7;
+        case "B+": return 3.3;
+        case "B":  return 3.0;
+        case "B-": return 2.7;
+        case "C+": return 2.3;
+        case "C":  return 2.0;
+        case "C-": return 1.7;
+        case "D":  return 1.0;
+        default:   return 0.0; // F or below
+    }
+}
+
+private double computeCourseGpa(model.Course course) {
+    double totalPoints = 0.0;
+    int count = 0;
+
+    for (model.EnrollmentRecord rec : model.MockDataStore.enrollments) {
+        if (rec.getCourse() != null &&
+            rec.getCourse().getCourseId().equals(course.getCourseId())) {
+
+            double grade = rec.getGrade();           // numeric, like 88.5
+            String letter = letterFromGrade(grade);  // convert to A/B/C etc.
+            double gpaPts = gpaFromLetter(letter);   // convert to 4.0 scale
+
+            totalPoints += gpaPts;
+            count++;
+        }
+    }
+
+    if (count == 0) {
+        return -1.0; // no students, no GPA
+    }
+
+    return totalPoints / count; // avg GPA for that course
+}
+
+
+
 
 
   
@@ -254,6 +379,7 @@ private String letterFromGrade(double grade) {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel5 = new javax.swing.JLabel();
         tabMain = new javax.swing.JTabbedPane();
         pnlProfile = new javax.swing.JPanel();
         lblName = new javax.swing.JLabel();
@@ -284,6 +410,18 @@ private String letterFromGrade(double grade) {
         tblStudents = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         lblClassGpa = new javax.swing.JLabel();
+        pnlReports = new javax.swing.JPanel();
+        lblReportHeader = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        lblTotalCourses = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        lblTotalStudents = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        lblOverallGpa = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        lblTopCourse = new javax.swing.JLabel();
+
+        jLabel5.setText("jLabel5");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Faculty Dashboard");
@@ -440,6 +578,81 @@ private String letterFromGrade(double grade) {
 
         tabMain.addTab("Students/Grades", pnlStudents);
 
+        lblReportHeader.setText("Faculty Summary");
+
+        jLabel1.setText("Total Courses:");
+
+        lblTotalCourses.setText("0");
+
+        jLabel3.setText("Total Enrolled Students:");
+
+        lblTotalStudents.setText("0");
+
+        jLabel4.setText("Overall Class GPA:");
+
+        lblOverallGpa.setText("0.00");
+
+        jLabel6.setText("Most Enrolled Course:");
+
+        lblTopCourse.setText("N/A");
+
+        javax.swing.GroupLayout pnlReportsLayout = new javax.swing.GroupLayout(pnlReports);
+        pnlReports.setLayout(pnlReportsLayout);
+        pnlReportsLayout.setHorizontalGroup(
+            pnlReportsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlReportsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlReportsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlReportsLayout.createSequentialGroup()
+                        .addComponent(lblReportHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlReportsLayout.createSequentialGroup()
+                        .addGap(0, 178, Short.MAX_VALUE)
+                        .addGroup(pnlReportsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlReportsLayout.createSequentialGroup()
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(50, 50, 50))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlReportsLayout.createSequentialGroup()
+                                .addGroup(pnlReportsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(42, 42, 42))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlReportsLayout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(60, 60, 60)))))
+                .addGroup(pnlReportsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblTotalCourses, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTotalStudents, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblOverallGpa, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTopCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24))
+        );
+        pnlReportsLayout.setVerticalGroup(
+            pnlReportsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlReportsLayout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(lblReportHeader)
+                .addGap(29, 29, 29)
+                .addGroup(pnlReportsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(lblTotalCourses))
+                .addGap(18, 18, 18)
+                .addGroup(pnlReportsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(lblTotalStudents))
+                .addGap(18, 18, 18)
+                .addGroup(pnlReportsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(lblOverallGpa))
+                .addGap(18, 18, 18)
+                .addGroup(pnlReportsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(lblTopCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(169, Short.MAX_VALUE))
+        );
+
+        tabMain.addTab("Reports", pnlReports);
+
         getContentPane().add(tabMain, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 570, 400));
 
         pack();
@@ -533,7 +746,12 @@ private String letterFromGrade(double grade) {
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnSaveCourseChanges;
     private javax.swing.JComboBox<String> cmbCourseSelect;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblCapacity;
@@ -543,11 +761,17 @@ private String letterFromGrade(double grade) {
     private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblName;
     private javax.swing.JLabel lblOfficeHours;
+    private javax.swing.JLabel lblOverallGpa;
+    private javax.swing.JLabel lblReportHeader;
     private javax.swing.JLabel lblSchedule;
     private javax.swing.JLabel lblSelectCourse;
     private javax.swing.JLabel lblTitle;
+    private javax.swing.JLabel lblTopCourse;
+    private javax.swing.JLabel lblTotalCourses;
+    private javax.swing.JLabel lblTotalStudents;
     private javax.swing.JPanel pnlCourses;
     private javax.swing.JPanel pnlProfile;
+    private javax.swing.JPanel pnlReports;
     private javax.swing.JPanel pnlStudents;
     private javax.swing.JTabbedPane tabMain;
     private javax.swing.JTable tblCourses;
