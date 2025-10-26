@@ -1,0 +1,1 @@
+F001|Dr. Ada Lovelace|ada@northeastern.edu|Information Systems|Mon 2-4pm, Room 123|ada123|password123

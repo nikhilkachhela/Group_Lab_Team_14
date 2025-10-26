@@ -8,20 +8,24 @@
  * @author samee
  */
 import model.MockDataStore;
+import ui.faculty.FacultyDashBoard;
 
 public class Member4 {
 
     public static void main(String[] args) {
 
-        // Initialize fake data
+        // 1. Load the mock/sample data into memory
         MockDataStore.init();
 
-        // Print sample outputs
-        System.out.println("Faculty: " + MockDataStore.FACULTY_1.getName());
-        System.out.println("Department: " + MockDataStore.FACULTY_1.getDepartment());
-        System.out.println("Courses: " + MockDataStore.courses.size());
-        System.out.println("Students: " + MockDataStore.students.size());
-        System.out.println("Enrollments: " + MockDataStore.enrollments.size());
+        // 2. Open the Faculty dashboard for FACULTY_1
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                FacultyDashBoard frame = new FacultyDashBoard(MockDataStore.FACULTY_1);
+                frame.setVisible(true);
+            }
+        });
     }
 }
+
 

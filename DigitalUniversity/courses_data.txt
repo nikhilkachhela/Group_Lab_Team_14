@@ -1,0 +1,2 @@
+INFO5100|Application Engineering|Mon/Wed 2–4 PM|50
+INFO6150|Web Design and UX|Tue/Thu 11–1 PM|25

@@ -9,13 +9,105 @@ package ui.faculty;
  * @author samee
  */
 public class FacultyDashBoard extends javax.swing.JFrame {
+        private model.Faculty currentFaculty;
+
 
     /**
      * Creates new form FacultyDashBoard
      */
-    public FacultyDashBoard() {
-        initComponents();
+    public FacultyDashBoard(model.Faculty faculty) {
+    initComponents();
+    this.currentFaculty = faculty;
+
+    loadProfileTab();
+    loadCoursesTab();       
+    setupCourseTableClick(); 
+  
+}
+
+private void loadProfileTab() {
+    if (currentFaculty != null) {
+        txtName.setText(currentFaculty.getName());
+        txtEmail.setText(currentFaculty.getEmail());
+        txtDepartment.setText(currentFaculty.getDepartment());
+        txtOfficeHours.setText(currentFaculty.getOfficeHours());
+    } else {
+        txtName.setText("");
+        txtEmail.setText("");
+        txtDepartment.setText("");
+        txtOfficeHours.setText("");
     }
+}
+
+
+private void loadCoursesTab() {
+  
+    javax.swing.table.DefaultTableModel courseModel =
+        new javax.swing.table.DefaultTableModel(
+            new Object[][]{},
+            new String[] { "Course ID", "Title", "Schedule", "Capacity" }
+        ) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+  
+    for (model.Course c : model.MockDataStore.courses) {
+        if (c.getInstructor() == currentFaculty) {
+            courseModel.addRow(new Object[]{
+                c.getCourseId(),
+                c.getTitle(),
+                c.getSchedule(),
+                c.getCapacity()
+            });
+        }
+    }
+
+    tblCourses.setModel(courseModel);
+
+    if (tblCourses.getRowCount() > 0) {
+        tblCourses.setRowSelectionInterval(0, 0);
+        fillCourseEditorFromRow(0);
+    }
+}
+
+private void fillCourseEditorFromRow(int row) {
+    if (row < 0) {
+        return;
+    }
+
+    Object idVal = tblCourses.getValueAt(row, 0);
+    Object titleVal = tblCourses.getValueAt(row, 1);
+    Object schedVal = tblCourses.getValueAt(row, 2);
+    Object capVal = tblCourses.getValueAt(row, 3);
+
+    if (idVal != null) {
+        txtCourseId.setText(idVal.toString());
+    }
+    if (titleVal != null) {
+        txtTitle.setText(titleVal.toString());
+    }
+    if (schedVal != null) {
+        txtSchedule.setText(schedVal.toString());
+    }
+    if (capVal != null) {
+        txtCapacity.setText(capVal.toString());
+    }
+}
+
+private void setupCourseTableClick() {
+    tblCourses.addMouseListener(new java.awt.event.MouseAdapter() {
+        @Override
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            int row = tblCourses.getSelectedRow();
+            fillCourseEditorFromRow(row);
+        }
+    });
+}
+
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -39,7 +131,7 @@ public class FacultyDashBoard extends javax.swing.JFrame {
         btnSave = new javax.swing.JButton();
         pnlCourses = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblCourses = new javax.swing.JTable();
         lblCourseId = new javax.swing.JLabel();
         txtCourseId = new javax.swing.JTextField();
         lblTitle = new javax.swing.JLabel();
@@ -70,6 +162,11 @@ public class FacultyDashBoard extends javax.swing.JFrame {
         });
 
         btnSave.setText("Save Profile");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlProfileLayout = new javax.swing.GroupLayout(pnlProfile);
         pnlProfile.setLayout(pnlProfileLayout);
@@ -123,7 +220,7 @@ public class FacultyDashBoard extends javax.swing.JFrame {
 
         pnlCourses.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblCourses.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -134,7 +231,7 @@ public class FacultyDashBoard extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblCourses);
 
         pnlCourses.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 460, 200));
 
@@ -154,8 +251,13 @@ public class FacultyDashBoard extends javax.swing.JFrame {
         pnlCourses.add(lblCapacity, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, -1, -1));
         pnlCourses.add(txtCapacity, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 280, -1, -1));
 
-        btnSaveCourseChanges.setText("Save Corse Changes");
-        pnlCourses.add(btnSaveCourseChanges, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 340, -1, -1));
+        btnSaveCourseChanges.setText("Save Course Changes");
+        btnSaveCourseChanges.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveCourseChangesActionPerformed(evt);
+            }
+        });
+        pnlCourses.add(btnSaveCourseChanges, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 340, -1, -1));
 
         tabMain.addTab("Courses", pnlCourses);
 
@@ -168,46 +270,85 @@ public class FacultyDashBoard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEmailActionPerformed
 
+    private void btnSaveCourseChangesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveCourseChangesActionPerformed
+        // TODO add your handling code here:
+     String newId = txtCourseId.getText().trim();
+    String newTitle = txtTitle.getText().trim();
+    String newSchedule = txtSchedule.getText().trim();
+    String newCapacityText = txtCapacity.getText().trim();
+
+    // Try to parse capacity into an int
+    Integer newCapacity = null;
+    try {
+        newCapacity = Integer.parseInt(newCapacityText);
+    } catch (NumberFormatException ex) {
+        System.out.println("Capacity is not a number. Leaving previous capacity.");
+    }
+
+    // 2. Find the matching Course in MockDataStore
+    model.Course courseToUpdate = null;
+    for (model.Course c : model.MockDataStore.courses) {
+        if (c.getInstructor() == currentFaculty &&
+            c.getCourseId().equals(newId)) {
+            courseToUpdate = c;
+            break;
+        }
+    }
+
+    if (courseToUpdate == null) {
+        System.out.println("No matching course found to update.");
+        return;
+    }
+
+    // 3. Update in-memory course
+    courseToUpdate.setTitle(newTitle);
+    courseToUpdate.setSchedule(newSchedule);
+    if (newCapacity != null) {
+        courseToUpdate.setCapacity(newCapacity);
+    }
+
+    // 4. Write ALL courses to disk so it persists next run
+    model.MockDataStore.saveCoursesToFile();
+
+    // 5. Debug print for grading/demo
+    System.out.println("Course updated and saved:");
+    System.out.println("  ID:       " + courseToUpdate.getCourseId());
+    System.out.println("  Title:    " + courseToUpdate.getTitle());
+    System.out.println("  Schedule: " + courseToUpdate.getSchedule());
+    System.out.println("  Capacity: " + courseToUpdate.getCapacity());
+
+    // 6. Reload table from the updated in-memory list
+    loadCoursesTab();
+
+
+
+    }//GEN-LAST:event_btnSaveCourseChangesActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        // TODO add your handling code here:
+        if (currentFaculty != null) {
+        currentFaculty.setName(txtName.getText());
+        currentFaculty.setEmail(txtEmail.getText());
+        currentFaculty.setDepartment(txtDepartment.getText());
+        currentFaculty.setOfficeHours(txtOfficeHours.getText());
+
+        System.out.println("Profile updated for: " + currentFaculty.getName());
+        
+        model.MockDataStore.saveFacultyToFile(currentFaculty);
+        
+        loadProfileTab();
+    }
+    }//GEN-LAST:event_btnSaveActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FacultyDashBoard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FacultyDashBoard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FacultyDashBoard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FacultyDashBoard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FacultyDashBoard().setVisible(true);
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnSaveCourseChanges;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblCapacity;
     private javax.swing.JLabel lblCourseId;
     private javax.swing.JLabel lblDepartment;
@@ -219,6 +360,7 @@ public class FacultyDashBoard extends javax.swing.JFrame {
     private javax.swing.JPanel pnlCourses;
     private javax.swing.JPanel pnlProfile;
     private javax.swing.JTabbedPane tabMain;
+    private javax.swing.JTable tblCourses;
     private javax.swing.JTextField txtCapacity;
     private javax.swing.JTextField txtCourseId;
     private javax.swing.JTextField txtDepartment;

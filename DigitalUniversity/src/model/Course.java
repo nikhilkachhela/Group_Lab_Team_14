@@ -10,6 +10,8 @@ package model;
  */
 
 
+
+ 
 public class Course {
 
     // ---------- Fields ----------
@@ -41,15 +43,27 @@ public class Course {
         this.instructor = instructor;
     }
 
-    // ---------- Short 5-parameter constructor (for older calls) ----------
-    // This lets you call new Course("INFO5100", "App Eng", 30, "Mon/Wed", faculty)
-    // without errors.  It automatically fills the missing values with defaults.
+    // ---------- Short 5-parameter constructor ----------
+    // Matches how MockDataStore is calling it:
+    // new Course("INFO5100", "Application Engineering", "Mon/Wed 2–4 PM", 30, FACULTY_1);
+    //
+    // Arguments here are:
+    // courseId, title, schedule, capacity, instructor
+    //
+    // We'll fill description="", enrollmentOpen=true, syllabusText=""
     public Course(String courseId,
                   String title,
-                  int capacity,
                   String schedule,
+                  int capacity,
                   Faculty instructor) {
-        this(courseId, title, "", schedule, capacity, true, "", instructor);
+        this(courseId,
+             title,
+             "",            // description default
+             schedule,
+             capacity,
+             true,          // enrollmentOpen default
+             "",            // syllabusText default
+             instructor);
     }
 
     // ---------- Getters & Setters ----------
