@@ -27,118 +27,144 @@ public class FacultyDashBoard extends javax.swing.JFrame {
     private void initComponents() {
 
         tabMain = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
         pnlProfile = new javax.swing.JPanel();
-        lblName = new javax.swing.JLabel();
-        lblEmail = new javax.swing.JLabel();
-        lblDepartment = new javax.swing.JLabel();
-        lblOfficeHours = new javax.swing.JLabel();
-        txtName = new javax.swing.JTextField();
-        txtEmail = new javax.swing.JTextField();
-        txtDepartment = new javax.swing.JTextField();
-        txtOfficeHours = new javax.swing.JTextField();
-        btnSave = new javax.swing.JButton();
+        lblName1 = new javax.swing.JLabel();
+        lblEmail1 = new javax.swing.JLabel();
+        lblDepartment1 = new javax.swing.JLabel();
+        lblOfficeHours1 = new javax.swing.JLabel();
+        txtName1 = new javax.swing.JTextField();
+        txtEmail1 = new javax.swing.JTextField();
+        txtDepartment1 = new javax.swing.JTextField();
+        txtOfficeHours1 = new javax.swing.JTextField();
+        btnSave1 = new javax.swing.JButton();
+        pnlCourses = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        lblCourseId = new javax.swing.JLabel();
+        txtCourseId = new javax.swing.JTextField();
+        lblTitle = new javax.swing.JLabel();
+        txtTitle = new javax.swing.JTextField();
+        lblSchedule = new javax.swing.JLabel();
+        txtSchedule = new javax.swing.JTextField();
+        lblCapacity = new javax.swing.JLabel();
+        txtCapacity = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Faculty Dashboard");
         setResizable(false);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblName.setText("Name");
+        lblName1.setText("Name");
 
-        lblEmail.setText("Email");
+        lblEmail1.setText("Email");
 
-        lblDepartment.setText("Department");
+        lblDepartment1.setText("Department");
 
-        lblOfficeHours.setText("Office Hours");
+        lblOfficeHours1.setText("Office Hours");
 
-        txtEmail.addActionListener(new java.awt.event.ActionListener() {
+        txtEmail1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEmailActionPerformed(evt);
+                txtEmail1ActionPerformed(evt);
             }
         });
 
-        btnSave.setText("Save Profile");
+        btnSave1.setText("Save Profile");
 
         javax.swing.GroupLayout pnlProfileLayout = new javax.swing.GroupLayout(pnlProfile);
         pnlProfile.setLayout(pnlProfileLayout);
         pnlProfileLayout.setHorizontalGroup(
             pnlProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlProfileLayout.createSequentialGroup()
+                .addGap(99, 99, 99)
                 .addGroup(pnlProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlProfileLayout.createSequentialGroup()
-                        .addGap(35, 35, 35)
                         .addGroup(pnlProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblDepartment, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblOfficeHours, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE))
+                            .addComponent(lblName1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblEmail1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblDepartment1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblOfficeHours1, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE))
                         .addGap(61, 61, 61)
                         .addGroup(pnlProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtName)
-                            .addComponent(txtEmail)
-                            .addComponent(txtDepartment)
-                            .addComponent(txtOfficeHours, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)))
+                            .addComponent(txtName1)
+                            .addComponent(txtEmail1)
+                            .addComponent(txtDepartment1)
+                            .addComponent(txtOfficeHours1, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)))
                     .addGroup(pnlProfileLayout.createSequentialGroup()
-                        .addGap(162, 162, 162)
-                        .addComponent(btnSave)))
-                .addContainerGap(73, Short.MAX_VALUE))
+                        .addGap(127, 127, 127)
+                        .addComponent(btnSave1)))
+                .addContainerGap(111, Short.MAX_VALUE))
         );
         pnlProfileLayout.setVerticalGroup(
             pnlProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlProfileLayout.createSequentialGroup()
-                .addGap(34, 34, 34)
+                .addGap(61, 61, 61)
                 .addGroup(pnlProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblName)
-                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblName1)
+                    .addComponent(txtName1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblEmail)
-                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblEmail1)
+                    .addComponent(txtEmail1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblDepartment)
-                    .addComponent(txtDepartment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblDepartment1)
+                    .addComponent(txtDepartment1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14)
                 .addGroup(pnlProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtOfficeHours, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblOfficeHours))
+                    .addComponent(txtOfficeHours1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblOfficeHours1))
                 .addGap(37, 37, 37)
-                .addComponent(btnSave)
-                .addContainerGap(89, Short.MAX_VALUE))
+                .addComponent(btnSave1)
+                .addContainerGap(81, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlProfile, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(pnlProfile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        tabMain.addTab("Profile", pnlProfile);
 
-        tabMain.addTab("tab1", jPanel1);
+        pnlCourses.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tabMain, javax.swing.GroupLayout.Alignment.TRAILING)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tabMain, javax.swing.GroupLayout.Alignment.TRAILING)
-        );
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        pnlCourses.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 460, 200));
+
+        lblCourseId.setText("Course ID");
+        pnlCourses.add(lblCourseId, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, -1, -1));
+        pnlCourses.add(txtCourseId, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 240, -1, -1));
+
+        lblTitle.setText("Title");
+        pnlCourses.add(lblTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 240, -1, -1));
+        pnlCourses.add(txtTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 240, 150, -1));
+
+        lblSchedule.setText("Schedule");
+        pnlCourses.add(lblSchedule, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, -1, -1));
+        pnlCourses.add(txtSchedule, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 280, -1, -1));
+
+        lblCapacity.setText("Capacity");
+        pnlCourses.add(lblCapacity, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 280, -1, -1));
+
+        txtCapacity.setText("jTextField1");
+        pnlCourses.add(txtCapacity, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 280, -1, -1));
+
+        tabMain.addTab("Courses", pnlCourses);
+
+        getContentPane().add(tabMain, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 359));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
+    private void txtEmail1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmail1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtEmailActionPerformed
+    }//GEN-LAST:event_txtEmail1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -176,17 +202,27 @@ public class FacultyDashBoard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnSave;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel lblDepartment;
-    private javax.swing.JLabel lblEmail;
-    private javax.swing.JLabel lblName;
-    private javax.swing.JLabel lblOfficeHours;
+    private javax.swing.JButton btnSave1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lblCapacity;
+    private javax.swing.JLabel lblCourseId;
+    private javax.swing.JLabel lblDepartment1;
+    private javax.swing.JLabel lblEmail1;
+    private javax.swing.JLabel lblName1;
+    private javax.swing.JLabel lblOfficeHours1;
+    private javax.swing.JLabel lblSchedule;
+    private javax.swing.JLabel lblTitle;
+    private javax.swing.JPanel pnlCourses;
     private javax.swing.JPanel pnlProfile;
     private javax.swing.JTabbedPane tabMain;
-    private javax.swing.JTextField txtDepartment;
-    private javax.swing.JTextField txtEmail;
-    private javax.swing.JTextField txtName;
-    private javax.swing.JTextField txtOfficeHours;
+    private javax.swing.JTextField txtCapacity;
+    private javax.swing.JTextField txtCourseId;
+    private javax.swing.JTextField txtDepartment1;
+    private javax.swing.JTextField txtEmail1;
+    private javax.swing.JTextField txtName1;
+    private javax.swing.JTextField txtOfficeHours1;
+    private javax.swing.JTextField txtSchedule;
+    private javax.swing.JTextField txtTitle;
     // End of variables declaration//GEN-END:variables
 }
