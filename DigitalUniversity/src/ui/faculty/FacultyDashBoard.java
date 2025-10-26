@@ -28,15 +28,15 @@ public class FacultyDashBoard extends javax.swing.JFrame {
 
         tabMain = new javax.swing.JTabbedPane();
         pnlProfile = new javax.swing.JPanel();
-        lblName1 = new javax.swing.JLabel();
-        lblEmail1 = new javax.swing.JLabel();
-        lblDepartment1 = new javax.swing.JLabel();
-        lblOfficeHours1 = new javax.swing.JLabel();
-        txtName1 = new javax.swing.JTextField();
-        txtEmail1 = new javax.swing.JTextField();
-        txtDepartment1 = new javax.swing.JTextField();
-        txtOfficeHours1 = new javax.swing.JTextField();
-        btnSave1 = new javax.swing.JButton();
+        lblName = new javax.swing.JLabel();
+        lblEmail = new javax.swing.JLabel();
+        lblDepartment = new javax.swing.JLabel();
+        lblOfficeHours = new javax.swing.JLabel();
+        txtName = new javax.swing.JTextField();
+        txtEmail = new javax.swing.JTextField();
+        txtDepartment = new javax.swing.JTextField();
+        txtOfficeHours = new javax.swing.JTextField();
+        btnSave = new javax.swing.JButton();
         pnlCourses = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -48,27 +48,28 @@ public class FacultyDashBoard extends javax.swing.JFrame {
         txtSchedule = new javax.swing.JTextField();
         lblCapacity = new javax.swing.JLabel();
         txtCapacity = new javax.swing.JTextField();
+        btnSaveCourseChanges = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Faculty Dashboard");
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblName1.setText("Name");
+        lblName.setText("Name");
 
-        lblEmail1.setText("Email");
+        lblEmail.setText("Email");
 
-        lblDepartment1.setText("Department");
+        lblDepartment.setText("Department");
 
-        lblOfficeHours1.setText("Office Hours");
+        lblOfficeHours.setText("Office Hours");
 
-        txtEmail1.addActionListener(new java.awt.event.ActionListener() {
+        txtEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEmail1ActionPerformed(evt);
+                txtEmailActionPerformed(evt);
             }
         });
 
-        btnSave1.setText("Save Profile");
+        btnSave.setText("Save Profile");
 
         javax.swing.GroupLayout pnlProfileLayout = new javax.swing.GroupLayout(pnlProfile);
         pnlProfile.setLayout(pnlProfileLayout);
@@ -79,43 +80,43 @@ public class FacultyDashBoard extends javax.swing.JFrame {
                 .addGroup(pnlProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlProfileLayout.createSequentialGroup()
                         .addGroup(pnlProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblName1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblEmail1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblDepartment1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblOfficeHours1, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE))
+                            .addComponent(lblName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblDepartment, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblOfficeHours, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE))
                         .addGap(61, 61, 61)
                         .addGroup(pnlProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtName1)
-                            .addComponent(txtEmail1)
-                            .addComponent(txtDepartment1)
-                            .addComponent(txtOfficeHours1, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)))
+                            .addComponent(txtName)
+                            .addComponent(txtEmail)
+                            .addComponent(txtDepartment)
+                            .addComponent(txtOfficeHours, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)))
                     .addGroup(pnlProfileLayout.createSequentialGroup()
                         .addGap(127, 127, 127)
-                        .addComponent(btnSave1)))
-                .addContainerGap(111, Short.MAX_VALUE))
+                        .addComponent(btnSave)))
+                .addContainerGap(179, Short.MAX_VALUE))
         );
         pnlProfileLayout.setVerticalGroup(
             pnlProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlProfileLayout.createSequentialGroup()
                 .addGap(61, 61, 61)
                 .addGroup(pnlProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblName1)
-                    .addComponent(txtName1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblName)
+                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblEmail1)
-                    .addComponent(txtEmail1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblEmail)
+                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblDepartment1)
-                    .addComponent(txtDepartment1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblDepartment)
+                    .addComponent(txtDepartment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14)
                 .addGroup(pnlProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtOfficeHours1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblOfficeHours1))
+                    .addComponent(txtOfficeHours, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblOfficeHours))
                 .addGap(37, 37, 37)
-                .addComponent(btnSave1)
-                .addContainerGap(81, Short.MAX_VALUE))
+                .addComponent(btnSave)
+                .addContainerGap(122, Short.MAX_VALUE))
         );
 
         tabMain.addTab("Profile", pnlProfile);
@@ -146,25 +147,26 @@ public class FacultyDashBoard extends javax.swing.JFrame {
         pnlCourses.add(txtTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 240, 150, -1));
 
         lblSchedule.setText("Schedule");
-        pnlCourses.add(lblSchedule, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, -1, -1));
-        pnlCourses.add(txtSchedule, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 280, -1, -1));
+        pnlCourses.add(lblSchedule, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 280, -1, -1));
+        pnlCourses.add(txtSchedule, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 280, 150, -1));
 
         lblCapacity.setText("Capacity");
-        pnlCourses.add(lblCapacity, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 280, -1, -1));
+        pnlCourses.add(lblCapacity, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, -1, -1));
+        pnlCourses.add(txtCapacity, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 280, -1, -1));
 
-        txtCapacity.setText("jTextField1");
-        pnlCourses.add(txtCapacity, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 280, -1, -1));
+        btnSaveCourseChanges.setText("Save Corse Changes");
+        pnlCourses.add(btnSaveCourseChanges, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 340, -1, -1));
 
         tabMain.addTab("Courses", pnlCourses);
 
-        getContentPane().add(tabMain, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 359));
+        getContentPane().add(tabMain, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 570, 400));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtEmail1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmail1ActionPerformed
+    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtEmail1ActionPerformed
+    }//GEN-LAST:event_txtEmailActionPerformed
 
     /**
      * @param args the command line arguments
@@ -202,15 +204,16 @@ public class FacultyDashBoard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnSave1;
+    private javax.swing.JButton btnSave;
+    private javax.swing.JButton btnSaveCourseChanges;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblCapacity;
     private javax.swing.JLabel lblCourseId;
-    private javax.swing.JLabel lblDepartment1;
-    private javax.swing.JLabel lblEmail1;
-    private javax.swing.JLabel lblName1;
-    private javax.swing.JLabel lblOfficeHours1;
+    private javax.swing.JLabel lblDepartment;
+    private javax.swing.JLabel lblEmail;
+    private javax.swing.JLabel lblName;
+    private javax.swing.JLabel lblOfficeHours;
     private javax.swing.JLabel lblSchedule;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JPanel pnlCourses;
@@ -218,10 +221,10 @@ public class FacultyDashBoard extends javax.swing.JFrame {
     private javax.swing.JTabbedPane tabMain;
     private javax.swing.JTextField txtCapacity;
     private javax.swing.JTextField txtCourseId;
-    private javax.swing.JTextField txtDepartment1;
-    private javax.swing.JTextField txtEmail1;
-    private javax.swing.JTextField txtName1;
-    private javax.swing.JTextField txtOfficeHours1;
+    private javax.swing.JTextField txtDepartment;
+    private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtName;
+    private javax.swing.JTextField txtOfficeHours;
     private javax.swing.JTextField txtSchedule;
     private javax.swing.JTextField txtTitle;
     // End of variables declaration//GEN-END:variables
